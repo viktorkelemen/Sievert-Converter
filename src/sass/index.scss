@@ -21,6 +21,12 @@ body {
 }
 
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 #wrapper {
     width: 320px;
     margin: auto;
@@ -49,8 +55,9 @@ body {
 		margin-bottom: 30px;
 
 		label {
-		        font-size: 80%;
-		        font-weight: normal;
+	        font-size: 80%;
+	        font-weight: normal;
+			margin-left: 5px;
 		}
 
 

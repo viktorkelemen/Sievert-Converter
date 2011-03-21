@@ -3,24 +3,24 @@
     <h2 class="header">Sievert converter</h2>
     <form id="sievert-form">
         <div class="container">
-            <input type="number" id="sv" value="0.0" min="0"></input>
+            <input type="number" id="sv" value="0.0" min="0" max="1.0e9"></input>
             <label for="sv">Sv</label>
         </div>
 
         <div class="container">
-            <input type="number" id="msv" value="0.0" min="0"></input>
+            <input type="number" id="msv" value="0.0" min="0" max="1.0e12"></input>
             <label for="msv">mSv</label>
         </div>
 
         <div class="container">
-            <input type="number" id="microsv" value="0.0" min="0"></input>
+            <input type="number" id="microsv" value="0.0" min="0" max="1.0e15"></input>
             <label for="microsv">μSv</label>
         </div>
     </form>
 
 	<div class="reference">
 	    <h2>Reference</h2>
-	    <p class="subheader">the value above is equivalent of</p> 
+	    <p class="subheader">the value above is equivalent of</p>
 	    <p class="banana">
 	        Eating <span class="number-container"><span class="number">0</span> banana</span>
 	    </p>
@@ -36,6 +36,12 @@
 </div>
 
 <script>
+
+    function cutLeadingZeros(s) {
+
+        var result = s.replace(/(\.\d*[^0]+)0+$/,'$1');
+        return result.replace(/\.0+$/,'.0');
+    }
 
     function updateReferences(msv) {
 
@@ -102,15 +108,15 @@
         function update(values, issv, ismsv, ismicrosv) {
 
             if (issv) {
-                sv.val(values.sv.toFixed(10));
+                sv.val(cutLeadingZeros(values.sv.toFixed(16)));
             }
 
             if (ismsv) {
-                msv.val(values.msv.toFixed(10));
+                msv.val(cutLeadingZeros(values.msv.toFixed(16)));
             }
 
             if (ismicrosv) {
-                microsv.val(values.microsv.toFixed(10));
+                microsv.val(cutLeadingZeros(values.microsv.toFixed(16)));
             }
         }
 
@@ -122,9 +128,15 @@
         sv.bind('input', function (event) {
 
             var value = sv.val(),
+                max = parseFloat(sv.attr("max")),
                 result;
 
             if (value !== "") {
+
+                if (value > max) {
+                    value = max;
+                    sv.val(max);
+                }
 
                 result = convert({
                     sv: parseFloat(value) || 0
@@ -142,9 +154,15 @@
 
 
             var value = msv.val(),
+                max = parseFloat(msv.attr("max")),
                 result;
 
             if (value !== "") {
+
+                if (value > max) {
+                    value = max;
+                    msv.val(max);
+                }
 
                 result = convert({
                     msv: parseFloat(value) || 0
@@ -162,9 +180,15 @@
         microsv.bind('input', function (event) {
 
             var value = microsv.val(),
+                max = parseFloat(microsv.attr("max")),
                 result;
 
             if (value !== "") {
+
+                if (value > max) {
+                    value = max;
+                    microsv.val(max);
+                }
 
                 result = convert({
                     microsv: parseFloat(value) || 0

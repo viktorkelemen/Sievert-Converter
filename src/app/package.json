@@ -1,5 +1,5 @@
 {
-  "name": "quakemonitor",
+  "name": "sievertconverter",
   "version": "0.0.1",
   "repository": {},
   "directories": {
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "express": "*",
-    "ejs": "*",
-    "jsdom": "*"
+    "ejs": "*"
   }
 }
