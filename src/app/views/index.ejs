@@ -1,0 +1,189 @@
+
+<div id="wrapper">
+    <h2 class="header">Sievert converter</h2>
+    <form id="sievert-form">
+        <div class="container">
+            <input type="number" id="sv" value="0.0" min="0"></input>
+            <label for="sv">Sv</label>
+        </div>
+
+        <div class="container">
+            <input type="number" id="msv" value="0.0" min="0"></input>
+            <label for="msv">mSv</label>
+        </div>
+
+        <div class="container">
+            <input type="number" id="microsv" value="0.0" min="0"></input>
+            <label for="microsv">μSv</label>
+        </div>
+    </form>
+
+	<div class="reference">
+	    <h2>Reference</h2>
+	    <p class="subheader">the value above is equivalent of</p> 
+	    <p class="banana">
+	        Eating <span class="number-container"><span class="number">0</span> banana</span>
+	    </p>
+	    <p class="chestx">
+	        Chest X-ray <span class="number-container"><span class="number">0</span> times</span>
+	    </p>
+
+	    <p class="nyttrip">
+	        Return trip from Tokyo to New York <span class="number-container"><span class="number">0</span> times</span>
+	    </p>
+
+	</div>
+</div>
+
+<script>
+
+    function updateReferences(msv) {
+
+        var number;
+
+        number = msv / 0.0001;
+        $(".banana .number").html(Math.round(number));
+
+        number = msv / 0.05;
+        $(".chestx .number").html(Math.round(number));
+
+        number = msv / 0.2;
+        $(".nyttrip .number").html(Math.round(number));
+
+    }
+    function convert(value) {
+
+        var result = { };
+
+        if (value.sv !== undefined) {
+
+            result.sv = value.sv;
+            result.msv = value.sv * 1000;
+            result.microsv = result.msv * 1000;
+
+            return result;
+        }
+
+        if (value.msv !== undefined) {
+
+            result.sv = value.msv / 1000;
+            result.msv = value.msv;
+            result.microsv = value.msv * 1000;
+
+            return result;
+        }
+
+        if (value.microsv !== undefined) {
+
+            result.microsv = value.microsv;
+            result.msv = value.microsv / 1000;
+            result.sv = result.msv / 1000;
+
+            return result;
+        }
+
+        return {
+            sv: 0,
+            msv: 0,
+            microsv: 0
+        };
+    }
+
+
+
+    function init() {
+
+
+        var form = $("#sievert-form"),
+            sv = form.find("#sv"),
+            msv = form.find("#msv"),
+            microsv = form.find("#microsv");
+
+        function update(values, issv, ismsv, ismicrosv) {
+
+            if (issv) {
+                sv.val(values.sv.toFixed(10));
+            }
+
+            if (ismsv) {
+                msv.val(values.msv.toFixed(10));
+            }
+
+            if (ismicrosv) {
+                microsv.val(values.microsv.toFixed(10));
+            }
+        }
+
+        form.submit( function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
+        sv.bind('input', function (event) {
+
+            var value = sv.val(),
+                result;
+
+            if (value !== "") {
+
+                result = convert({
+                    sv: parseFloat(value) || 0
+                });
+
+                update(result, false, true, true);
+                updateReferences(result.msv);
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
+        msv.bind('input', function (event) {
+
+
+            var value = msv.val(),
+                result;
+
+            if (value !== "") {
+
+                result = convert({
+                    msv: parseFloat(value) || 0
+                });
+
+                update(result, true, false, true);
+                updateReferences(result.msv);
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
+
+        microsv.bind('input', function (event) {
+
+            var value = microsv.val(),
+                result;
+
+            if (value !== "") {
+
+                result = convert({
+                    microsv: parseFloat(value) || 0
+                });
+
+                update(result, true, true, false);
+                updateReferences(result.msv);
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
+    }
+
+
+    $( function () {
+
+
+        init();
+    });
+</script>
