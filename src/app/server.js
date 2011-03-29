@@ -46,4 +46,19 @@ app.get('/', function(req, res){
     res.render('index');
 });
 
+app.get('/info', function(req, res){
+
+    res.render('info', {
+		layout: false
+	});
+});
+
+app.get('/links', function(req, res){
+
+    res.render('links', {
+		layout: false
+	});
+});
+
+
 app.listen(30000);
