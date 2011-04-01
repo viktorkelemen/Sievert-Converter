@@ -59,14 +59,15 @@ a:hover {
 }
 
         	#container {
-        	    width: 660px;
+        	    width: 680px;
         	    margin: auto;
         	}
 
 		    #intro {
 		        width: 240px;
 		        float: left;
-		        padding-top: 260px;
+		        padding-top: 220px;
+				margin-right: 20px;
 		    }
 
 			#intro h1 {
@@ -94,13 +95,23 @@ a:hover {
 				text-align: center;
 			}
 
+			.app-store-btn {
+				width: 180px;
+				height: 59px;
+				display: inline-block;
+				background: url(/app-store-btn.png) top left no-repeat;
+				text-indent: -9999px;
+				overflow: hidden;
+			}
+
 		</style>
 	</head>
 	<body>
 	    <div id="container">
     	    <div id="intro">
         		<h1>Sievert converter</h1>
-        		<p>It converts sievert (Sv) units to millisievert (mSv) and to microsievert (μSv).</p>
+        		<p>It converts sievert (Sv) units to<br> millisievert (mSv) and to microsievert (μSv).</p>
+				<p><a href="http://itunes.apple.com/us/app/sievert-converter/id427580650" class="app-store-btn">iPhone version is available here.</a></p>
 				<p><a href="/">The web version is available here.</a></p>
         	</div>
     		<img id="screenshot" src="screenshot.jpg" width="412" height="752">
